@@ -9,7 +9,7 @@ const api: AxiosInstance = axios.create({
 
 // https://axios-http.com/docs/interceptors
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('vollToken')
+  const token = localStorage.getItem('voll@token')
 
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`
@@ -23,6 +23,6 @@ export async function login(data: LoginForm): Promise<LoginAxiosResponse> {
 
   return {
     status: response.status,
-    data: response.data
+    data: response.status === 201 ? response.data : null
   }
 }

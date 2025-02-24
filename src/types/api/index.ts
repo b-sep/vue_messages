@@ -3,10 +3,12 @@ export type LoginForm = {
 }
 
 export type LoginResponse = {
-  token?: string
+  user_id: number
+  user_name: string
+  token: string
 }
 
 export type LoginAxiosResponse = {
   status: number
-  data: LoginResponse
+  data: LoginResponse | null
 }

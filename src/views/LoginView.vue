@@ -14,9 +14,12 @@
     try {
       const response = await login(form.value)
 
-      if (response.data.token) {
-        localStorage.setItem('vollToken', response.data.token)
+      if (response.data) {
         router.push('/')
+
+        localStorage.setItem('voll@token', response.data.token)
+        localStorage.setItem('voll@userId', response.data.user_id.toString())
+        localStorage.setItem('voll@userName', response.data.user_name)
       } else if (response.status === 401) {
         error.value = 'Ops 🥲'
       }

@@ -1,8 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
+import HomeView from '../views/HomeView.vue'
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView,
+    // https://router.vuejs.org/guide/advanced/meta.html
+    meta: { requiresAuth: true }
+  },
   {
     path: '/login',
     name: 'login',
@@ -24,10 +32,12 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('vollToken')
+  const token = localStorage.getItem('voll@token')
 
-  if (to.path === '/login' && token) {
-    router.push({ path: from.path || '/' })
+  if (to.meta.requiresAuth && !token) {
+    next('/login')
+  } else if (to.path === '/login' && token) {
+    next({ path: from.path || '/' })
   } else {
     next()
   }
