@@ -1,15 +1,36 @@
 <script setup lang="ts">
-  import type { Messages } from '../types/api'
+  import { ref } from 'vue';
+  import { createMessage } from '@/services/api';
+  import type { Messages, MessageForm } from '@/types/api'
   import Message from './Message.vue';
 
   defineProps<{
     messages: Messages
   }>()
+
+  const form = ref<MessageForm>({ message: { recipient: '', content: '' }})
+  const error = ref<string | null>(null)
+  const createMessageSuccess = ref(false)
+
+  async function onSubmit() {
+    try {
+      const response = await createMessage(form.value)
+      const responseError = response.data?.error
+
+      if (responseError) {
+        error.value = responseError
+      } else {
+        createMessageSuccess.value = true
+      }
+    } catch {
+      error.value = 'Ops 🥲'
+    }
+  }
 </script>
 
 <template>
   <div>
-    <section class="message-container">
+    <section>
       <h1>Mensagens Enviadas</h1>
 
       <ul v-if="messages.sended_messages.length > 0">
@@ -24,7 +45,7 @@
       <p v-else>Nenhuma mensagem enviada :(</p>
     </section>
 
-    <section class="message-container">
+    <section>
       <h1>Mensagens Recebidas</h1>
 
       <ul v-if="messages.received_messages.length > 0">
@@ -38,22 +59,64 @@
       </ul>
       <p v-else>Nenhuma mensagem recebida :(</p>
     </section>
+
+    <section>
+      <h1>Enviar Mensagem</h1>
+
+      <form @submit.prevent="onSubmit">
+        <textarea rows="30" v-model="form.message.content"></textarea>
+        <input placeholder="email" required type="email" v-model="form.message.recipient"></input>
+
+        <button type="submit">Enviar</button>
+      </form>
+
+      <p v-if="error" class="error">{{ error }}</p>
+      <p v-if="createMessageSuccess" class="success">Mensagem enviada :)</p>
+    </section>
   </div>
 </template>
 
 <style scoped>
-  .message-container {
-    height: 90vh;
+  .error {
+    color: red;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  .success {
+    color: green;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  section {
     padding: 1rem;
-    width: 700px;
     text-align: center;
+    width: 100%;
   }
 
   div {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-top: 2rem;
     padding: 1rem;
+  }
+
+  form, ul {
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    min-height: 80vh;
+  }
+
+  input, textarea {
+    background-color: #eee;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    padding: 0.5rem;
   }
 
   h1 {
@@ -66,14 +129,8 @@
   }
 
   ul {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    border: 1px solid #bbb;
-    border-radius: 5px;
     max-height: 70vh;
     list-style: none;
-    padding: 1rem;
     overflow-y: auto;
   }
 </style>

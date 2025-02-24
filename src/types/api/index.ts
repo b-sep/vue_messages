@@ -21,6 +21,10 @@ export type LoginForm = {
   email_address: string
 }
 
+export type MessageForm = {
+  message: { recipient: string, content: string }
+}
+
 export type LoginResponse = {
   user_id: number
   user_name: string
@@ -31,6 +35,10 @@ export type GetMessagesResponse = {
   messages: Messages
 }
 
+export type CreateMessageResponse = {
+  error: string
+}
+
 export type LoginApiResponse = {
   status: number
   data: LoginResponse | null
@@ -39,4 +47,9 @@ export type LoginApiResponse = {
 export type GetMessagesApiResponse = {
   status: number
   data: GetMessagesResponse | null
+}
+
+export type CreateMessageApiResponse = {
+  status: number
+  data: CreateMessageResponse | null
 }

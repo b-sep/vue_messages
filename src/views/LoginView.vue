@@ -21,7 +21,7 @@
         localStorage.setItem('voll@userId', response.data.user_id.toString())
         localStorage.setItem('voll@userName', response.data.user_name)
       } else if (response.status === 401) {
-        error.value = 'Ops 🥲'
+        error.value = 'Email não encontrado 😵‍💫'
       }
     } catch {
       error.value = 'Ops 🥲'
@@ -60,7 +60,7 @@
   }
 
   .error {
-    color: tomato;
+    color: red;
     font-size: 2rem;
     font-weight: 500;
   }
