@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { AxiosInstance, AxiosResponse } from 'axios'
-import type { LoginForm, LoginResponse, LoginAxiosResponse } from '../types/api'
+import type { GetMessagesResponse, LoginForm, LoginResponse, LoginApiResponse, GetMessagesApiResponse } from '../types/api'
 
 const api: AxiosInstance = axios.create({
   baseURL: 'http://0.0.0.0:3000/api',
@@ -18,11 +18,20 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-export async function login(data: LoginForm): Promise<LoginAxiosResponse> {
+export async function login(data: LoginForm): Promise<LoginApiResponse> {
   const response: AxiosResponse<LoginResponse> = await api.post<LoginResponse>('/session', { email_address: data.email_address })
 
   return {
     status: response.status,
     data: response.status === 201 ? response.data : null
+  }
+}
+
+export async function getMessages(userId: string): Promise<GetMessagesApiResponse> {
+  const response: AxiosResponse<GetMessagesResponse> = await api.get(`/messages/${userId}`)
+
+  return {
+    status: response.status,
+    data: response.status === 200 ? response.data : null
   }
 }

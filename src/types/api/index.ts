@@ -1,3 +1,22 @@
+interface Message {
+  content: string
+}
+
+interface ReceivedMessage extends Message {
+  from: string
+  received_at: string
+}
+
+interface SendedMessage extends Message {
+  sended_at: string
+  to: string
+}
+
+export type Messages = {
+  sended_messages: Array<SendedMessage>
+  received_messages: Array<ReceivedMessage>
+}
+
 export type LoginForm = {
   email_address: string
 }
@@ -8,7 +27,16 @@ export type LoginResponse = {
   token: string
 }
 
-export type LoginAxiosResponse = {
+export type GetMessagesResponse = {
+  messages: Messages
+}
+
+export type LoginApiResponse = {
   status: number
   data: LoginResponse | null
+}
+
+export type GetMessagesApiResponse = {
+  status: number
+  data: GetMessagesResponse | null
 }
