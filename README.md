@@ -13,6 +13,7 @@ App escrita utilizando o framework `Vue`.
 - TypeScript
 - Axios
 - Vue Router
+- ActionCable
 
 ## Executando
 
