@@ -21,6 +21,7 @@
         error.value = responseError
         createMessageSuccess.value = false
       } else {
+        form.value.message.content = ''
         createMessageSuccess.value = true
         error.value = null
       }
