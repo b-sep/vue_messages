@@ -16,6 +16,8 @@
 
       if (response.data) {
         router.push('/')
+        // TODO: use pinia to manage state with userToken variable defined in App.vue
+        window.location.reload()
 
         localStorage.setItem('voll@token', response.data.token)
         localStorage.setItem('voll@userId', response.data.user_id.toString())
@@ -76,8 +78,7 @@
   button, input {
     border-radius: 5px;
     font-size: 1.5rem;
-    min-width: 260px;
-    width: 35%;
+    min-width: 360px;
   }
 
   input {

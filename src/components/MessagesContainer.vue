@@ -19,8 +19,10 @@
 
       if (responseError) {
         error.value = responseError
+        createMessageSuccess.value = false
       } else {
         createMessageSuccess.value = true
+        error.value = null
       }
     } catch {
       error.value = 'Ops 🥲'

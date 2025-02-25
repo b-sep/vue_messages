@@ -39,6 +39,14 @@ export async function login(data: LoginForm): Promise<LoginApiResponse> {
   }
 }
 
+export async function logout(): Promise<{ status: number }> {
+  const response: AxiosResponse<{ status: number }> = await api.delete<{ status: number }>('/session')
+
+  return {
+    status: response.status,
+  }
+}
+
 export async function createMessage(data: MessageForm): Promise<CreateMessageApiResponse> {
   const formData = { message: { recipient: data.message.recipient, content: data.message.content }}
 
