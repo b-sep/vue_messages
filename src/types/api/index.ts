@@ -12,6 +12,15 @@ interface SendedMessage extends Message {
   to: string
 }
 
+export type wsMessage = {
+  type: string
+  content: string
+  from?: string
+  received_at?: string
+  sended_at?: string
+  to?: string
+}
+
 export type Messages = {
   sended_messages: Array<SendedMessage>
   received_messages: Array<ReceivedMessage>
