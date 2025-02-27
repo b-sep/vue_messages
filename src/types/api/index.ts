@@ -44,10 +44,6 @@ export type GetMessagesResponse = {
   messages: Messages
 }
 
-export type CreateMessageResponse = {
-  error: string
-}
-
 export type LoginApiResponse = {
   status: number
   data: LoginResponse | null
@@ -60,5 +56,4 @@ export type GetMessagesApiResponse = {
 
 export type CreateMessageApiResponse = {
   status: number
-  data: CreateMessageResponse | null
 }
