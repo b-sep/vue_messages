@@ -10,20 +10,13 @@
 
   const form = ref<MessageForm>({ message: { recipient: '', content: '' }})
   const error = ref<string | null>(null)
-  const createMessageSuccess = ref(false)
 
   async function onSubmit() {
     try {
       const response = await createMessage(form.value)
-      const responseError = response.data?.error
 
-      if (responseError) {
-        error.value = responseError
-        createMessageSuccess.value = false
-      } else {
+      if (response.status === 200) {
         form.value.message.content = ''
-        createMessageSuccess.value = true
-        error.value = null
       }
     } catch {
       error.value = 'Ops 🥲'
@@ -74,7 +67,6 @@
       </form>
 
       <p v-if="error" class="error">{{ error }}</p>
-      <p v-if="createMessageSuccess" class="success">Mensagem enviada :)</p>
     </section>
   </div>
 </template>

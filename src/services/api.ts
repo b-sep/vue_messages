@@ -8,7 +8,6 @@ import type {
   LoginApiResponse,
   GetMessagesApiResponse,
   MessageForm,
-  CreateMessageResponse
 } from '../types/api'
 
 const api: AxiosInstance = axios.create({
@@ -50,11 +49,10 @@ export async function logout(): Promise<{ status: number }> {
 export async function createMessage(data: MessageForm): Promise<CreateMessageApiResponse> {
   const formData = { message: { recipient: data.message.recipient, content: data.message.content }}
 
-  const response: AxiosResponse<CreateMessageResponse> = await api.post<CreateMessageResponse>('/messages', formData)
+  const response: AxiosResponse<{ status: number }> = await api.post<{ status: number }>('/messages', formData)
 
   return {
     status: response.status,
-    data: response.data
   }
 }
 
